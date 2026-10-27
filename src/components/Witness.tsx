@@ -48,9 +48,6 @@ export default function Witness({ t, lang }: { t: Dict; lang: Lang }) {
         {t.witness.commit} <strong>{status?.commit ?? t.witness.absent}</strong>
       </span>
       <SocialLinks />
-      <span>
-        {t.witness.motto} · {t.witness.frame}
-      </span>
     </footer>
   )
 }

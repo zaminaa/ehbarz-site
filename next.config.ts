@@ -5,7 +5,13 @@ const nextConfig: NextConfig = {
   poweredByHeader: false,
   reactStrictMode: true,
   async redirects() {
-    return [{ source: "/fa/article", destination: "/fa", permanent: true }]
+    return [
+      { source: "/fa/article", destination: "/fa", permanent: true },
+      { source: "/forge", destination: "/fa", permanent: true },
+      { source: "/design", destination: "/fa", permanent: true },
+      { source: "/:lang(fa|en)/forge", destination: "/fa", permanent: true },
+      { source: "/:lang(fa|en)/design", destination: "/fa", permanent: true },
+    ]
   },
 }
 
