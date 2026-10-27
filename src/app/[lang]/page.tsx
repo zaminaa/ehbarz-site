@@ -1,9 +1,27 @@
-// Homepage — the approved introduction and the six systems.
-// Server component. The theme toggle lives in the header.
+// Homepage — the approved introduction and six system cards.
+// Status lines and chips are slices of that same copy, not new sentences.
 
 import { dict, LANGS, type Lang } from "@/i18n/dictionaries"
 import SiteHeader from "@/components/SiteHeader"
 import SocialLinks from "@/components/SocialLinks"
+
+const STATUS_TAILS = [
+  " نه قالب آماده.",
+  " Not a ready-made template.",
+  " اتصال نهایی به بانک مادر هنوز در مرحلهٔ ساخت است.",
+  " The final connection to the parent bank is still under construction.",
+]
+
+function cardParts(body: string) {
+  for (const mark of [" وضعیت: ", " Status: "]) {
+    const at = body.indexOf(mark)
+    if (at !== -1) return { text: body.slice(0, at), status: body.slice(at + 1) }
+  }
+  for (const tail of STATUS_TAILS) {
+    if (body.endsWith(tail)) return { text: body.slice(0, -tail.length).trimEnd(), status: tail.trim() }
+  }
+  return { text: body, status: "" }
+}
 
 export default async function Home({ params }: { params: Promise<{ lang: string }> }) {
   const { lang } = await params
@@ -21,7 +39,7 @@ export default async function Home({ params }: { params: Promise<{ lang: string 
           ))}
         </header>
         <section className="glance" aria-label={t.home.glanceLabel}>
-          <span className="section-label">{t.home.glanceLabel}</span>
+          <h2 className="home-title">{t.home.glanceLabel}</h2>
           <ul>
             {t.home.glance.map((item) => (
               <li key={item}>{item}</li>
@@ -29,13 +47,28 @@ export default async function Home({ params }: { params: Promise<{ lang: string 
           </ul>
         </section>
         <section className="monolith portfolio" aria-labelledby="portfolio-label">
-          <span className="section-label" id="portfolio-label">{t.home.portfolioLabel}</span>
-          {t.portfolio.map((item) => (
-            <article key={item.title}>
-              <h2>{item.title}</h2>
-              <p>{item.body}</p>
-            </article>
-          ))}
+          <h2 className="home-title" id="portfolio-label">{t.home.portfolioLabel}</h2>
+          <div className="portfolio-grid">
+            {t.portfolio.map((item) => {
+              const { text, status } = cardParts(item.body)
+              return (
+                <article className="portfolio-card" key={item.title}>
+                  <div className="card-face">
+                    <h3>{item.title}</h3>
+                    <p>{text}</p>
+                    {item.tech.length > 0 && (
+                      <ul className="chips">
+                        {item.tech.map((chip) => (
+                          <li key={chip}>{chip}</li>
+                        ))}
+                      </ul>
+                    )}
+                    {status && <p className="card-status">{status}</p>}
+                  </div>
+                </article>
+              )
+            })}
+          </div>
         </section>
       </main>
       <footer className="witness-footer">

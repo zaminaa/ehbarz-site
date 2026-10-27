@@ -108,26 +108,32 @@ const fa = {
     {
       title: "ایرانوبان — موتور روایت ایرانوبان",
       body: "رسانهٔ داده‌محور اقتصادی و ساختمانی با ۱۷ ورک‌فلو: تابلوی ساخت، قیمت مصالح، اینفوگرافیک روزانه، سریال تاریخی، نبض بازار و گزیده. خواننده هر روز دوبار سر ساعت مشخص قیمت روز را با تاریخش می‌بیند، پیچیده‌ترین عدد روز را در یک تصویر مینیمال می‌فهمد و خلاصهٔ گزینش‌شدهٔ روز را می‌گیرد. لایهٔ پرسش‌وپاسخ کم‌هزینه: کش داخلی، کش ۶ ساعته، سقف روزانهٔ ۲۰۰ فراخوانی مدل، تزریق ۱۰ قیمت کلیدی روز از دیتابیس خودمان. وضعیت: نسخهٔ ۱۶٫۱۰٫۱، فعال تا امروز.",
+      tech: ["کش داخلی", "کش ۶ ساعته", "دیتابیس"],
     },
     {
       title: "وب‌سایت‌های رسمی",
       body: "پنج سایت با یک استک یکدست (Next.js 15 و TypeScript): سایت هلدینگ، سایت واحد فناوری اطلاعات، سایت شرکت مهندسی (۶۸ صفحه شامل ۵۸ شناسنامهٔ پروژه با فیلتر و جست‌وجوی زنده)، سایت محصول فارابی و سایت ایرانوبان. فرم، سئوی کامل، ۲۴ سناریوی آزمون موفق برای فارابی. نه قالب آماده.",
+      tech: ["Next.js 15", "TypeScript"],
     },
     {
       title: "فارابی / دستیار هوشمند نظام مهندسی",
       body: "عضو سازمان مقررات را می‌پرسد، تعرفه حساب می‌کند، از ۳۰ ابزار مهندسی استفاده می‌کند — از درز انقطاع تا شیب رمپ. موتور پرسش چهار مرحله: تشخیص مبحث، کش ۶ ساعته، بازیابی روی ۲۳ مبحث مقررات و ۱۹۴ پرسش تأییدشده، نگهبان زیر آستانهٔ امتیاز که می‌گوید ندارد. فقط کتابخانهٔ استاندارد پایتون و SQLite. وضعیت: زنده، نسخه‌های ۷٫۱ تا ۷٫۷٫۷، سقف پرسش روزانه ۵۰، مخاطب بیش از ۱۳ هزار مهندس عضو. نقش: طراح و توصیه‌دهندهٔ فنی.",
+      tech: ["پایتون", "SQLite"],
     },
     {
       title: "دستیار هوشمند پیمانکاری",
       body: "گزارش روزانهٔ تأمین هر محل با مانع پیش‌رو و برنامهٔ فردا، سررسیدها و مبالغ با تومان و ریال، گزارش هیئت‌مدیره با جمع چک و قسط، نامه‌ها، بازبینی حقوقی و مناقصه. «گروه سیگنال است، پی‌وی پنل است» با قفل سمت سرور؛ صف خروجی ماندگار با تلاش مجدد؛ تنها وابستگی زمان اجرا pg. وضعیت: نسخهٔ ۴٫۹٫۱۲ در محیط تولید.",
+      tech: ["pg"],
     },
     {
       title: "موتور قیمتی — پروژهٔ تیمی",
       body: "تابلوی ساخت، هر روز دوبار، از سه سایت ایرانی — ۱۳ محصول و ۵۷ خدمت — با تاریخ همان قیمت از خود منبع. اعداد اجرا: ۱٬۲۳۸ قیمت خوانده‌شده، ۷۰ محصول و خدمت، حدود ۱۵ ثانیه، خطا صفر، ۴۰۴ آزمون موفق. رفتار خطا: توقف انتشار دادهٔ مشکوک، برچسب کهنگی برای قیمت از آخرین قیمت سالم، ماژول توسعه که منتظر نهایی‌شدن اتصال نمی‌ماند. اتصال نهایی به بانک مادر هنوز در مرحلهٔ ساخت است.",
+      tech: [] as string[],
     },
     {
       title: "تقویم سازمانی — پروژهٔ تیمی",
       body: "سامانهٔ تقویم و رویداد سازمانی با نقش‌های مدیرعامل، مدیر و عضو؛ یادآورها با حذف اپ قطع نمی‌شوند چون داده روی سرور سازمان می‌ماند. نصب مثل اپ واقعی بدون اپ‌استور، آیکون اختصاصی، تمام‌صفحه، صفحهٔ فارسی «اینترنت برقرار نیست» با دکمهٔ تلاش دوباره. دمو با یک دستور داکر و پنج سرویس: سایت، سرور، Redis، صف یادآور و ربات بله. وضعیت: نسخهٔ R4 نهایی با ۱۶۹ تست سبز، در مرحلهٔ دمو و استقرار.",
+      tech: ["داکر", "Redis", "ربات بله"],
     },
   ],
 }
@@ -235,26 +241,32 @@ const en: typeof fa = {
     {
       title: "Iranoban — Iranoban's narrative engine",
       body: "A data-driven economic and construction medium with 17 workflows: the construction board, materials prices, a daily infographic, a historical series, the market pulse, and the digest. Twice a day, at a fixed hour, the reader sees the day's price with its date, understands the day's most complex number in one minimal image, and receives the day's selected summary. A low-cost question-and-answer layer: an in-memory cache, a 6-hour cache, a daily cap of 200 model calls, and injection of 10 key prices of the day from our own database. Status: version 16.10.1, active through today.",
+      tech: ["in-memory cache", "6-hour cache", "database"],
     },
     {
       title: "Official websites",
       body: "Five sites on one consistent stack (Next.js 15 and TypeScript): the holding site, the information-technology unit site, the engineering-company site (68 pages, including 58 project records with filter and live search), the Farabi product site, and the Iranoban site. Forms, full SEO, 24 passing test scenarios for Farabi. Not a ready-made template.",
+      tech: ["Next.js 15", "TypeScript"],
     },
     {
       title: "Farabi / the intelligent assistant of the engineering organization",
       body: "A member asks the regulations, calculates a tariff, and uses 30 engineering tools — from the seismic separation joint to the ramp slope. A four-stage question engine: topic detection, a 6-hour cache, retrieval over 23 regulation chapters and 194 verified questions, and a guard below the score threshold that says it does not have the answer. Only the Python standard library and SQLite. Status: live, versions 7.1 through 7.7.7, a daily question cap of 50, an audience of more than 13,000 member engineers. Role: designer and technical advisor.",
+      tech: ["Python", "SQLite"],
     },
     {
       title: "The contracting intelligent assistant",
       body: "A daily supply report for each site, with the obstacle ahead and tomorrow's plan; due dates and amounts in toman and rial; a board report with the sum of checks and installments; letters, legal review, and tender. «The group is a signal, the PV is a panel», locked on the server; a durable outbound queue with retry; the only runtime dependency is pg. Status: version 4.9.12 in production.",
+      tech: ["pg"],
     },
     {
       title: "The price engine — a team project",
       body: "The construction board, twice a day, from three Iranian sites — 13 products and 57 services — with the date of that price taken from the source itself. Run figures: 1,238 prices read, 70 products and services, about 15 seconds, zero errors, 404 passing tests. Error behavior: stop publishing suspect data, a staleness label when a price is taken from the last healthy price, and a development module that does not wait for the final connection to be finished. The final connection to the parent bank is still under construction.",
+      tech: [] as string[],
     },
     {
       title: "The organizational calendar — a team project",
       body: "An organizational calendar and events system with the roles of chief executive, manager, and member. Reminders are not lost when the app is removed, because the data stays on the organization's server. It installs like a real app without an app store: a dedicated icon, full screen, and a Persian “the internet is down” page with a try-again button. A demo from one Docker command and five services: the site, the server, Redis, the reminder queue, and the Bale bot. Status: final version R4 with 169 green tests, in demo and deployment.",
+      tech: ["Docker", "Redis", "Bale bot"],
     },
   ],
 }
