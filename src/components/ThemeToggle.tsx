@@ -31,8 +31,8 @@ export default function ThemeToggle({ t }: { t: Dict }) {
   const next: Mode = effective === "dark" ? "light" : "dark"
 
   return (
-    <button type="button" className="theme-toggle" aria-pressed={effective === "dark"} onClick={() => setStored(next)}>
-      {effective === "dark" ? t.theme.toDark : t.theme.toLight}
+    <button type="button" className="theme-toggle" onClick={() => setStored(next)}>
+      {next === "light" ? t.theme.toLight : t.theme.toDark}
     </button>
   )
 }
