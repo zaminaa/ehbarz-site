@@ -1,6 +1,7 @@
 {
   "$schema": "node_modules/wrangler/config-schema.json",
-  "name": "ehbarz-azarsang",
+  // Workers Builds deploys this repo as ehbarz-site. The self binding must use that same name.
+  "name": "ehbarz-site",
   "main": ".open-next/worker.js",
   "compatibility_date": "2026-10-27",
   "compatibility_flags": [
@@ -14,7 +15,7 @@
   "services": [
     {
       "binding": "WORKER_SELF_REFERENCE",
-      "service": "ehbarz-azarsang"
+      "service": "ehbarz-site"
     }
   ]
 }

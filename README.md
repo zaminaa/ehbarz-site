@@ -108,7 +108,7 @@ footer. Ships with GitHub / Instagram / Telegram / Email for `ehbarz`.
 
 ## Deploy — Cloudflare Workers
 
-Worker name: `ehbarz-azarsang` (`wrangler.jsonc`). No environment variable is required
+Worker name: `ehbarz-site` (`wrangler.jsonc`). No environment variable is required
 for the first deploy. Do not commit values. `liara.json` and `netlify.toml` are unchanged.
 
 `/fa/article` is not a page. `next.config.ts` sends it to `/fa` with a 308.
@@ -146,7 +146,7 @@ Check that URL:
 - `POST /api/ask` with a JSON body `{ "question": "…" }` → `"state":"absent"` until `ASK_ENDPOINT` is set
 
 Set optional variables from the table above in the dashboard
-(Workers → `ehbarz-azarsang` → Settings → Variables and Secrets), or for a local Worker
+(Workers → `ehbarz-site` → Settings → Variables and Secrets), or for a local Worker
 preview only in `.dev.vars` (gitignored). For CI, put `CLOUDFLARE_API_TOKEN` in the
 shell environment, not in this repo.
 
