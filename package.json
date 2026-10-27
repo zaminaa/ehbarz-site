@@ -1,0 +1,22 @@
+{
+  "name": "ehbarz-azarsang-site",
+  "version": "13.9.9",
+  "private": true,
+  "description": "EHBARZ · اح‌بارز — AZARSANG V13.9.9 flagship monument. Obsidian is cooled magma. As-built. No fake numbers.",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start"
+  },
+  "dependencies": {
+    "next": "15.3.3",
+    "react": "19.1.0",
+    "react-dom": "19.1.0"
+  },
+  "devDependencies": {
+    "@types/node": "22.15.21",
+    "@types/react": "19.1.5",
+    "@types/react-dom": "19.1.5",
+    "typescript": "5.8.3"
+  }
+}

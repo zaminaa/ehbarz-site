@@ -1,0 +1,268 @@
+/* AZARSANG V13.9.9 — five tokens. The fifth is heat, and heat is rationed. */
+:root {
+  --void: #060607;
+  --carbon: #131316;
+  --bone: #E7E4DC;
+  --pulse: #F4F2EC;
+  --ember: #E8621C; /* commit only · ≤2% of any frame · never flames */
+  /* derivatives — opacities of the five, never new hues */
+  --edge: #26262B;
+  --ghost: rgba(231, 228, 220, 0.45);
+  --faint: rgba(231, 228, 220, 0.22);
+  --pulse-dim: rgba(244, 242, 236, 0.4);
+  --ember-dim: rgba(232, 98, 28, 0.35);
+
+  --module: 8px;
+  --vein-w: 2px;
+  --ease-resolve: cubic-bezier(0.7, 0, 0.16, 1);
+  --ease-still: cubic-bezier(0.16, 1, 0.3, 1);
+  --resolve-t: 1300ms;
+  --stillness-t: 300ms;
+  --commit-t: 280ms;
+
+  --font-monument: "Monument Extended", "Archivo Black", "Arial Black", Arial, sans-serif;
+  --font-monument-fa: Estedad, "Noto Sans Arabic", Vazirmatn, "Arial Black", sans-serif;
+  --font-voice: Inter, system-ui, -apple-system, sans-serif;
+  --font-voice-fa: Estedad, Vazirmatn, "Noto Sans Arabic", system-ui, sans-serif;
+  --font-witness: "JetBrains Mono", "Liberation Mono", Menlo, Consolas, monospace;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--void);
+  color: var(--bone);
+  font-family: var(--font-voice);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  min-height: 100svh;
+}
+[dir="rtl"] body, body:lang(fa) { font-family: var(--font-voice-fa); }
+
+::selection { background: var(--bone); color: var(--void); }
+
+/* silence includes the scrollbar */
+::-webkit-scrollbar { width: 10px; }
+::-webkit-scrollbar-track { background: var(--void); }
+::-webkit-scrollbar-thumb { background: var(--edge); }
+html { scrollbar-color: var(--edge) var(--void); }
+
+a { color: var(--bone); text-decoration: none; }
+a:hover { color: var(--pulse); }
+:focus-visible { outline: 2px solid var(--bone); outline-offset: 3px; }
+
+/* ── registers ── */
+.monument {
+  font-family: var(--font-monument);
+  font-weight: 900;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  line-height: 1.05;
+}
+[dir="rtl"] .monument-native { font-family: var(--font-monument-fa); letter-spacing: 0; text-transform: none; }
+.witness { font-family: var(--font-witness); font-size: 0.8125rem; color: var(--ghost); }
+.witness strong { color: var(--bone); font-weight: 400; }
+
+/* ── a11y ── */
+.skip-link {
+  position: fixed; inset-inline-start: 16px; top: -64px;
+  background: var(--carbon); color: var(--bone);
+  padding: 12px 20px; z-index: 100; border: 1px solid var(--edge);
+  transition: top 200ms var(--ease-still);
+}
+.skip-link:focus { top: 16px; }
+.visually-hidden {
+  position: absolute; width: 1px; height: 1px; overflow: hidden;
+  clip: rect(0 0 0 0); white-space: nowrap;
+}
+
+/* ── frame ── */
+.site-header {
+  position: fixed; top: 0; inset-inline: 0; z-index: 50;
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 20px clamp(20px, 5vw, 64px);
+  background: linear-gradient(var(--void) 60%, transparent);
+}
+.site-header nav { display: flex; gap: clamp(12px, 3vw, 40px); align-items: center; flex-wrap: wrap; }
+.site-header nav a { font-family: var(--font-witness); font-size: 0.8125rem; color: var(--ghost); }
+.site-header nav a[aria-current="page"], .site-header nav a:hover { color: var(--bone); }
+.brand { font-family: var(--font-witness); font-size: 0.875rem; color: var(--bone); letter-spacing: 0.08em; white-space: nowrap; }
+.lang-switch { font-family: var(--font-witness); font-size: 0.8125rem; border: 1px solid var(--edge); padding: 6px 14px; color: var(--ghost); }
+.lang-switch:hover { border-color: var(--bone); color: var(--bone); }
+
+main { display: block; }
+
+/* ── hero ── */
+.hero {
+  min-height: 100svh;
+  display: flex; flex-direction: column; justify-content: center; align-items: center;
+  gap: clamp(24px, 4vh, 48px);
+  padding: 120px clamp(20px, 6vw, 80px) 80px;
+  text-align: center;
+}
+.hero-kicker { font-family: var(--font-witness); font-size: 0.8125rem; color: var(--ghost); letter-spacing: 0.2em; }
+.hero-svg { width: min(92vw, 1100px); height: auto; display: block; }
+.hero-statement { max-width: 34em; color: var(--ghost); font-size: clamp(1rem, 1.4vw, 1.2rem); }
+.hero-witness { font-family: var(--font-witness); font-size: 0.8125rem; color: var(--ghost); min-height: 1.5em; }
+.hero-scroll { font-family: var(--font-witness); font-size: 0.75rem; color: var(--faint); letter-spacing: 0.2em; }
+
+/* ── the vein ── */
+.vein-path {
+  stroke: var(--pulse); stroke-width: var(--vein-w); fill: none;
+  stroke-dasharray: 1; stroke-dashoffset: 1;
+  transition: stroke-dashoffset var(--resolve-t) var(--ease-resolve);
+}
+.vein-path.resolving { stroke-dashoffset: 0.1; }
+.vein-path.verified { stroke-dashoffset: 0.02; }
+.vein-dark { stroke: var(--edge); stroke-width: var(--vein-w); fill: none; }
+.chamber-node { fill: var(--void); stroke: var(--bone); stroke-width: 2.5; }
+.chamber-node--dark { stroke: var(--edge); }
+.chamber-node--decision { stroke: var(--ember); stroke-width: 2.5; }
+.node-label { font-family: var(--font-witness); font-size: 17px; fill: var(--bone); text-anchor: middle; direction: ltr; }
+.node-label--dark { fill: var(--ghost); }
+.node-label--decision { fill: var(--ember); }
+
+@keyframes heartbeat { 0%, 100% { opacity: 1; } 50% { opacity: 0.22; } }
+.waiting { animation: heartbeat 2s var(--ease-still) infinite; }
+
+/* THE COMMIT — the system's only heat · 280ms · once */
+@keyframes commit-flash { 0% { opacity: 0; } 12% { opacity: 1; } 100% { opacity: 0; } }
+.commit-firing { animation: commit-flash var(--commit-t) var(--ease-still) 1; }
+
+/* THE SMOLDER — 0.2Hz · only 01–06 Asia/Tehran · only the ember point */
+@keyframes smolder { 0%, 100% { opacity: 0.9; } 50% { opacity: 0.45; } }
+.ember-point { fill: var(--ember); }
+.ember-point.night { animation: smolder 5s ease-in-out infinite; }
+
+/* ── sections ── */
+.monolith { padding: clamp(80px, 14vh, 160px) clamp(20px, 6vw, 80px); max-width: 1280px; margin-inline: auto; }
+.section-label {
+  font-family: var(--font-witness); font-size: 0.8125rem; color: var(--ghost);
+  letter-spacing: 0.18em; margin-bottom: 40px; display: block;
+}
+.section-intro { max-width: 38em; color: var(--ghost); margin-bottom: 56px; }
+
+.graph-wrap { border: 1px solid var(--carbon); padding: clamp(16px, 3vw, 48px); }
+.graph-note { margin-top: 24px; }
+
+/* ── chambers ── */
+.chamber-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2px; background: var(--carbon); border: 1px solid var(--carbon); }
+.chamber-card { background: var(--void); padding: 40px 32px; display: flex; flex-direction: column; gap: 16px; min-height: 260px; }
+.chamber-card:hover { background: var(--carbon); transition: background 400ms var(--ease-still); }
+.chamber-id { font-family: var(--font-witness); font-size: 0.8125rem; color: var(--ghost); display: flex; justify-content: space-between; gap: 12px; }
+.chamber-name { font-size: 1.25rem; font-weight: 700; }
+.chamber-desc { color: var(--ghost); font-size: 0.95rem; flex: 1; }
+.chamber-stack { display: flex; flex-wrap: wrap; gap: 8px; }
+.chamber-stack span { font-family: var(--font-witness); font-size: 0.6875rem; color: var(--ghost); border: 1px solid var(--edge); padding: 3px 10px; }
+.chamber-card.quarantined { outline: 1px solid var(--edge); outline-offset: 6px; }
+.chamber-card.decision { outline: 1px solid var(--ember-dim); outline-offset: 6px; }
+.status-dot { display: inline-block; width: 8px; height: 8px; background: var(--edge); }
+.status-dot.up { background: var(--pulse); }
+.status-dot.down { background: var(--edge); outline: 1px solid var(--ghost); }
+.status-line { display: inline-flex; align-items: center; gap: 8px; }
+
+/* ── laws ── */
+.laws-list { list-style: none; counter-reset: law; max-width: 44em; }
+.laws-list li {
+  counter-increment: law; padding: 20px 0; border-bottom: 1px solid var(--carbon);
+  display: flex; gap: 24px; align-items: baseline; font-size: 1.05rem;
+}
+.laws-list li::before {
+  content: counter(law, decimal-leading-zero);
+  font-family: var(--font-witness); font-size: 0.8125rem; color: var(--ghost); min-width: 2.5em;
+}
+
+/* ── gate divider ── */
+.gate-divider { display: block; width: min(60vw, 520px); margin: clamp(60px, 10vh, 120px) auto; }
+
+/* ── /ask ── */
+.ask-shell { max-width: 760px; margin-inline: auto; min-height: 70svh; display: flex; flex-direction: column; gap: 32px; }
+.ask-log { display: flex; flex-direction: column; gap: 20px; }
+.ask-entry { border-inline-start: 2px solid var(--edge); padding: 12px 20px; }
+.ask-entry.q { border-color: var(--bone); }
+.ask-entry.q .ask-text { color: var(--bone); }
+.ask-text { white-space: pre-wrap; }
+.ask-meta { font-family: var(--font-witness); font-size: 0.75rem; color: var(--ghost); margin-top: 8px; }
+.ask-entry.unknown { border-color: var(--edge); }
+.ask-entry.unknown .ask-text { color: var(--ghost); }
+.ask-form { display: flex; gap: 2px; border: 1px solid var(--edge); }
+.ask-form:focus-within { border-color: var(--bone); }
+.ask-input {
+  flex: 1; background: var(--void); border: 0; color: var(--bone);
+  font-family: var(--font-witness); font-size: 1rem; padding: 18px 20px;
+  min-width: 0;
+}
+.ask-input::placeholder { color: var(--faint); }
+.ask-input:focus { outline: none; }
+.ask-send {
+  background: var(--carbon); color: var(--bone); border: 0; cursor: pointer;
+  font-family: var(--font-witness); font-size: 0.875rem; padding: 0 28px;
+}
+.ask-send:hover { background: var(--edge); }
+.wait-square { display: inline-block; width: 10px; height: 10px; background: var(--pulse); margin-inline-end: 10px; }
+
+/* ── the forge · کورهٔ تصمیم ── */
+.forge-shell { max-width: 760px; margin-inline: auto; display: flex; flex-direction: column; gap: 28px; }
+.forge-law { color: var(--ghost); max-width: 40em; }
+.forge-field label { display: block; font-family: var(--font-witness); font-size: 0.8125rem; color: var(--ghost); margin-bottom: 10px; }
+.forge-input {
+  width: 100%; background: var(--void); border: 1.5px solid var(--edge); color: var(--bone);
+  font: inherit; font-size: 1.05rem; padding: 14px 16px;
+}
+.forge-input:focus-visible { outline: none; border-color: var(--bone); }
+.forge-gauge { display: flex; align-items: center; gap: 18px; }
+.forge-gauge input[type="range"] { flex: 1; accent-color: #E7E4DC; }
+.forge-conf { font-family: var(--font-witness); font-size: 1.05rem; min-width: 5.5em; }
+.forge-gate { position: relative; height: 2px; background: var(--edge); margin-top: 10px; }
+.forge-gate .lit { position: absolute; inset-block: 0; inset-inline-start: 0; background: var(--pulse); transition: width 400ms var(--ease-still); }
+.forge-gate .mark { position: absolute; top: -5px; inset-inline-start: 60%; width: 2px; height: 12px; background: var(--ghost); }
+.forge-verdict { font-family: var(--font-witness); font-size: 0.875rem; color: var(--ghost); min-height: 1.6em; }
+.forge-commit {
+  width: 100%; background: none; cursor: pointer; font: inherit; font-weight: 700;
+  font-size: 1.05rem; padding: 16px; border: 1.5px solid var(--bone); color: var(--bone);
+  transition: border-color 2s var(--ease-still), color 2s var(--ease-still);
+}
+.forge-commit:disabled { cursor: not-allowed; border-color: var(--edge); color: var(--ghost); }
+.forge-commit.hot { border-color: var(--ember); color: var(--ember); transition: none; }
+.forge-ledger { list-style: none; margin-top: 24px; }
+.forge-ledger li { border-top: 1px solid var(--carbon); padding: 14px 4px; display: flex; gap: 14px; align-items: baseline; font-size: 0.95rem; }
+.forge-ledger .dot { width: 8px; height: 8px; flex: none; align-self: center; background: var(--ember); transition: background 6s var(--ease-still); }
+.forge-ledger .dot.cold { background: var(--bone); }
+.forge-ledger .stamp { font-family: var(--font-witness); font-size: 0.75rem; color: var(--ghost); margin-inline-start: auto; text-align: end; }
+
+/* ── design page ── */
+.tokens-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 2px; background: var(--carbon); border: 1px solid var(--carbon); margin-bottom: 64px; }
+.token-cell { background: var(--void); padding: 28px; display: flex; flex-direction: column; gap: 12px; }
+.swatch { height: 72px; border: 1px solid var(--edge); }
+.lum-row { display: flex; align-items: center; gap: 20px; padding: 16px 0; border-bottom: 1px solid var(--carbon); }
+.lum-bar { height: 4px; flex: 0 0 160px; background: var(--edge); position: relative; }
+.lum-bar i { position: absolute; inset-block: 0; inset-inline-start: 0; background: var(--pulse); display: block; }
+.lum-bar i.ember { background: var(--ember); }
+.type-specimen { padding: 28px 0; border-bottom: 1px solid var(--carbon); }
+.type-specimen .big { font-size: clamp(1.6rem, 4vw, 2.6rem); }
+
+/* ── witness footer ── */
+.witness-footer {
+  border-top: 1px solid var(--carbon);
+  padding: 40px clamp(20px, 5vw, 64px);
+  display: flex; flex-wrap: wrap; gap: 16px 48px; justify-content: space-between;
+  font-family: var(--font-witness); font-size: 0.8125rem; color: var(--ghost);
+}
+.social-row { display: flex; gap: 20px; flex-wrap: wrap; }
+.social-row a { color: var(--ghost); border-bottom: 1px solid var(--edge); padding-bottom: 2px; }
+.social-row a:hover { color: var(--bone); border-color: var(--bone); }
+
+/* ── reveal — arrives with THE RESOLVE, settles at 90%, earns the rest on focus ── */
+.reveal { opacity: 0; transform: translateY(24px); transition: opacity var(--resolve-t) var(--ease-resolve), transform var(--resolve-t) var(--ease-resolve); }
+.reveal.resolved { opacity: 0.9; transform: none; }
+.reveal.resolved:hover, .reveal.resolved:focus-within { opacity: 1; transition: opacity 400ms var(--ease-still); }
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .vein-path { transition: none; stroke-dashoffset: 0.1; }
+  .waiting, .wait-square, .commit-firing, .ember-point.night { animation: none; }
+  .forge-commit, .forge-ledger .dot { transition: none; }
+  .reveal { opacity: 1; transform: none; transition: none; }
+}
