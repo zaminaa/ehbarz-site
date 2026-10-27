@@ -30,7 +30,7 @@ as-built honesty + confidence gate of V12 — and adds the one thing none of the
 ## Architecture
 
 ```
-middleware.ts             / → /fa or /en · honors the azarsang_lang cookie
+src/middleware.ts         / → /fa or /en · honors the azarsang_lang cookie
 src/
   app/
     [lang]/               fa | en · the same mass, two voices (html dir switches)
@@ -105,6 +105,47 @@ Health endpoints may return anything with HTTP 200; if they return JSON
 
 Edit **`src/lib/social.ts`** — one registry, rendered by `SocialLinks` in the witness
 footer. Ships with GitHub / Instagram / Telegram / Email for `ehbarz`.
+
+## Deploy — Cloudflare Workers
+
+Worker name: `ehbarz-azarsang` (`wrangler.jsonc`). No environment variable is required
+for the first deploy. Do not commit values. `liara.json` and `netlify.toml` are unchanged.
+
+`/fa/article` is not a page. `next.config.ts` sends it to `/fa` with a 308.
+`src/middleware.ts` still only redirects `/` to `/fa` or `/en` from the `azarsang_lang` cookie.
+`@opennextjs/cloudflare` 1.20.13 requires Next.js `>=15.5.28 <16` (this repo is on 15.5.28).
+
+```bash
+npm install
+npx wrangler login
+npm run deploy
+```
+
+`npm run deploy` runs `opennextjs-cloudflare build` (that runs `next build`, then writes
+`.open-next/`) and `opennextjs-cloudflare deploy -- --keep-vars`. `--keep-vars` leaves
+variables already stored in the Cloudflare dashboard in place. Secrets are never removed
+by a deploy. Wrangler prints the `*.workers.dev` URL.
+
+Check that URL:
+
+- `GET /` → 307 to `/fa`, or to `/en` when the cookie `azarsang_lang=en`
+- `GET /fa/article` → 308 to `/fa`
+- `GET /api/status` → every system `"state":"absent"` until a `STATUS_URL_*` variable is set
+- `POST /api/ask` with a JSON body `{ "question": "…" }` → `"state":"absent"` until `ASK_ENDPOINT` is set
+
+Set optional variables from the table above in the dashboard
+(Workers → `ehbarz-azarsang` → Settings → Variables and Secrets), or for a local Worker
+preview only in `.dev.vars` (gitignored). For CI, put `CLOUDFLARE_API_TOKEN` in the
+shell environment, not in this repo.
+
+Preview the Workers runtime locally (not `next dev`):
+
+```bash
+npm run preview
+```
+
+That serves `http://127.0.0.1:8787`. OpenNext warns that Windows builds can fail at
+runtime. If a later Windows build does, run the same `npm run deploy` from WSL.
 
 ## Deploy — Vercel
 
