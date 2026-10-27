@@ -3,6 +3,7 @@
 
 import Link from "next/link"
 import type { Dict, Lang } from "@/i18n/dictionaries"
+import ThemeToggle from "./ThemeToggle"
 
 export type SitePath = "" | "ask" | "forge" | "design"
 
@@ -17,6 +18,7 @@ export default function SiteHeader({ t, lang, path }: { t: Dict; lang: Lang; pat
         <Link href={`/${lang}/ask`} aria-current={path === "ask" ? "page" : undefined}>{t.nav.ask}</Link>
         <Link href={`/${lang}/forge`} aria-current={path === "forge" ? "page" : undefined}>{t.nav.forge}</Link>
         <Link href={`/${lang}/design`} aria-current={path === "design" ? "page" : undefined}>{t.nav.design}</Link>
+        <ThemeToggle t={t} />
         <Link className="lang-switch" href={`/${other}${suffix}`} lang={other} hrefLang={other}>
           {other === "fa" ? "فارسی" : "EN"}
         </Link>

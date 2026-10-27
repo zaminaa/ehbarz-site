@@ -1,13 +1,9 @@
-// The monument — Hero → living graph → chambers → the constitution → the gate.
-// Server component shell; only the living organs are client components.
+// Homepage — the approved introduction and the six systems.
+// Server component. The theme toggle lives in the header.
 
 import { dict, LANGS, type Lang } from "@/i18n/dictionaries"
 import SiteHeader from "@/components/SiteHeader"
-import Hero from "@/components/Hero"
-import VeinGraph from "@/components/VeinGraph"
-import ChamberGrid from "@/components/ChamberGrid"
-import Gate from "@/components/Gate"
-import Witness from "@/components/Witness"
+import SocialLinks from "@/components/SocialLinks"
 
 export default async function Home({ params }: { params: Promise<{ lang: string }> }) {
   const { lang } = await params
@@ -18,21 +14,33 @@ export default async function Home({ params }: { params: Promise<{ lang: string 
     <>
       <SiteHeader t={t} lang={l} path="" />
       <main id="content">
-        <Hero t={t} lang={l} />
-        <VeinGraph t={t} lang={l} />
-        <Gate />
-        <ChamberGrid t={t} lang={l} />
-        <Gate />
-        <section className="monolith" aria-labelledby="laws-label">
-          <span className="section-label" id="laws-label">{t.laws.label}</span>
-          <ol className="laws-list">
-            {t.laws.items.map((law) => (
-              <li key={law}>{law}</li>
+        <header className="home-hero">
+          <h1>{t.home.title}</h1>
+          {t.home.lines.map((line) => (
+            <p key={line}>{line}</p>
+          ))}
+        </header>
+        <section className="glance" aria-label={t.home.glanceLabel}>
+          <span className="section-label">{t.home.glanceLabel}</span>
+          <ul>
+            {t.home.glance.map((item) => (
+              <li key={item}>{item}</li>
             ))}
-          </ol>
+          </ul>
+        </section>
+        <section className="monolith portfolio" aria-labelledby="portfolio-label">
+          <span className="section-label" id="portfolio-label">{t.home.portfolioLabel}</span>
+          {t.portfolio.map((item) => (
+            <article key={item.title}>
+              <h2>{item.title}</h2>
+              <p>{item.body}</p>
+            </article>
+          ))}
         </section>
       </main>
-      <Witness t={t} lang={l} />
+      <footer className="witness-footer">
+        <SocialLinks />
+      </footer>
     </>
   )
 }

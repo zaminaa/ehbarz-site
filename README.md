@@ -141,6 +141,9 @@ stays `next build`.
 Check that URL:
 
 - `GET /` → 307 to `/fa`, or to `/en` when the cookie `azarsang_lang=en`
+- `GET /fa` shows the hero «احسان برزمینی — سازندهٔ سیستم‌های نرم‌افزاری», the «در یک نگاه» strip, and these six titles in order: ایرانوبان — موتور روایت ایرانوبان، وب‌سایت‌های رسمی، فارابی / دستیار هوشمند نظام مهندسی، دستیار هوشمند پیمانکاری، موتور قیمتی — پروژهٔ تیمی، تقویم سازمانی — پروژهٔ تیمی
+- `GET /en` shows the same page in English, including “Ehsan Barzamini — builder of software systems” and “At a glance”
+- The header theme control switches the page between the dark tokens and the paper theme, and the choice is still there after reload (`azarsang.theme` in localStorage). With no stored choice, the page follows `prefers-color-scheme`
 - `GET /fa/article` → 308 to `/fa`
 - `GET /api/status` → every system `"state":"absent"` until a `STATUS_URL_*` variable is set
 - `POST /api/ask` with a JSON body `{ "question": "…" }` → `"state":"absent"` until `ASK_ENDPOINT` is set
