@@ -121,10 +121,22 @@ npx wrangler login
 npm run deploy
 ```
 
-`npm run deploy` runs `opennextjs-cloudflare build` (that runs `next build`, then writes
+`npm run deploy` runs `opennextjs-cloudflare build` (Next.js via `npx next build`, then
 `.open-next/`) and `opennextjs-cloudflare deploy -- --keep-vars`. `--keep-vars` leaves
 variables already stored in the Cloudflare dashboard in place. Secrets are never removed
 by a deploy. Wrangler prints the `*.workers.dev` URL.
+
+Workers Builds (the GitHub connection) injects `WORKERS_CI=1` and is already set to:
+
+- Build command: `npm run build`
+- Deploy command: `npx wrangler deploy`
+
+On that CI, `npm run build` runs `opennextjs-cloudflare build`. `npx wrangler deploy`
+then calls `opennextjs-cloudflare deploy`, which reads
+`.open-next/.build/open-next.config.edge.mjs`. A plain `next build` does not create
+that file, which is why deploy failed with `Could not find compiled Open Next config`.
+Leave both dashboard commands as they are. Outside Workers Builds, `npm run build`
+stays `next build`.
 
 Check that URL:
 

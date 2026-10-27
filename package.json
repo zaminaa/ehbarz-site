@@ -5,7 +5,7 @@
   "description": "EHBARZ · اح‌بارز — AZARSANG V13.9.9 flagship monument. Obsidian is cooled magma. As-built. No fake numbers.",
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "build": "node scripts/build.mjs",
     "start": "next start",
     "preview": "opennextjs-cloudflare build && opennextjs-cloudflare preview",
     "deploy": "opennextjs-cloudflare build && opennextjs-cloudflare deploy -- --keep-vars"
