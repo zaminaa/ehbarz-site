@@ -627,7 +627,10 @@ main { display: block; }
   width: 100%; height: auto; display: block;
   border: 1px solid var(--edge);
   opacity: 0.55; transition: opacity 700ms var(--ease-still);
+  /* the receipt is a fixed English share card: its own direction, never the page's */
+  direction: ltr;
 }
+.sw-card text { direction: ltr; unicode-bidi: isolate; }
 .sw-card-wrap.is-ready .sw-card { opacity: 1; }
 .sw-card-wrap figcaption { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; font-family: var(--font-witness); font-size: 0.75rem; color: var(--ghost); }
 .sw-card-wrap figcaption > span { color: var(--bone); }

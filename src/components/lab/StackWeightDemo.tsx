@@ -204,6 +204,8 @@ export default function StackWeightDemo({ t }: { t: Dict["lab"] }) {
             role="img"
             aria-label={`${s.receipt}: ${fmtK(w.stackWeight)} tokens, ${w.deadPct}% dead`}
             xmlns="http://www.w3.org/2000/svg"
+            // inline, not a class: the serialized copy that becomes the PNG must keep it too
+            style={{ direction: "ltr" }}
           >
             <rect width="1200" height="630" fill="#0B0D10" />
             <text x="80" y="80" {...CARD.label}>
