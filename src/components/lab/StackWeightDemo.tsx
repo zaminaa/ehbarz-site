@@ -28,7 +28,9 @@ const clamp01 = (n: number) => Math.min(1, Math.max(0, n))
 
 export default function StackWeightDemo({ t }: { t: Dict["lab"] }) {
   const s = t.sw
-  const [progress, setProgress] = useState(0)
+  // Starts complete, so the server-rendered page and a no-JS reader get the real
+  // receipt rather than a permanently empty one. The first view resets it and plays.
+  const [progress, setProgress] = useState(1)
   const [runId, setRunId] = useState(0)
   const hostRef = useRef<HTMLDivElement>(null)
   const svgRef = useRef<SVGSVGElement>(null)
@@ -60,6 +62,7 @@ export default function StackWeightDemo({ t }: { t: Dict["lab"] }) {
       (entries) => {
         if (entries.some((e) => e.isIntersecting) && !started.current) {
           started.current = true
+          setProgress(0)
           start()
           io.disconnect()
         }
@@ -78,7 +81,7 @@ export default function StackWeightDemo({ t }: { t: Dict["lab"] }) {
   }, [runId, start])
 
   const p = ease(progress)
-  const step = Math.min(4, Math.floor(p * 5))
+  const step = progress >= 1 ? 5 : Math.floor(p * 5) // at 1 nothing is "now": all five are done
   const done = progress >= 1
   const w = SAMPLE_SCAN.totals
 

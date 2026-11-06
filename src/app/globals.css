@@ -1,4 +1,4 @@
-/* AZARSANG V13.9.9 — five tokens. The fifth is heat, and heat is rationed. */
+﻿/* AZARSANG V13.9.9 — five tokens. The fifth is heat, and heat is rationed. */
 /* Estedad by Amin Abedi, SIL OFL 1.1. Files and license: public/fonts/ */
 @font-face {
   font-family: Estedad;
@@ -514,6 +514,23 @@ main { display: block; }
    ══════════════════════════════════════════════════════════════════════ */
 
 .lab { padding-bottom: clamp(72px, 12vh, 140px); }
+/* --ghost (0.45) lands at 3.74:1 — too thin for Persian body copy. Inside the lab only,
+   the two ink tokens are lifted to readable derivatives of the same bone. The rest of
+   the monument keeps its palette untouched. */
+.lab {
+  --ghost: rgba(231, 228, 220, 0.68);
+  --faint: rgba(231, 228, 220, 0.56);
+}
+:root[data-theme="light"] .lab {
+  --ghost: rgba(20, 20, 20, 0.74);
+  --faint: rgba(20, 20, 20, 0.6);
+}
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme]) .lab {
+    --ghost: rgba(20, 20, 20, 0.74);
+    --faint: rgba(20, 20, 20, 0.6);
+  }
+}
 .lab-hero {
   max-width: 900px; margin-inline: auto;
   padding: 176px clamp(24px, 6vw, 80px) clamp(56px, 8vh, 88px);
@@ -544,7 +561,7 @@ main { display: block; }
 .lab-badge[data-source="cache"], .lab-badge[data-source="seed"], .lab-badge[data-source="absent"] { color: var(--ghost); }
 .lab-body { color: var(--ghost); line-height: 1.95; max-width: 46em; }
 .lab-note { font-family: var(--font-witness); font-size: 0.8125rem; color: var(--ghost); line-height: 1.8; }
-.lab-hint { font-family: var(--font-witness); font-size: 0.75rem; color: var(--faint); letter-spacing: 0.12em; margin-top: 14px; }
+.lab-hint { font-family: var(--font-witness); font-size: 0.75rem; color: var(--ghost); letter-spacing: 0.12em; margin-top: 14px; }
 .lab-actions { display: flex; align-items: center; gap: 18px; flex-wrap: wrap; margin-top: 24px; }
 .lab-btn {
   font-family: var(--font-witness); font-size: 0.8125rem; cursor: pointer;
@@ -739,3 +756,4 @@ main { display: block; }
   from { opacity: 0; translate: 0 22px; }
   to { opacity: 1; translate: 0 0; }
 }
+
