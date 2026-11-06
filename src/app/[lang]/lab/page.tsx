@@ -6,6 +6,7 @@ import SiteHeader from "@/components/SiteHeader"
 import Witness from "@/components/Witness"
 import StackWeightDemo from "@/components/lab/StackWeightDemo"
 import GauntletReplay from "@/components/lab/GauntletReplay"
+import LabJournal from "@/components/lab/LabJournal"
 
 export async function generateMetadata({ params }: { params: Promise<{ lang: string }> }) {
   const { lang } = await params
@@ -30,12 +31,7 @@ export default async function LabPage({ params }: { params: Promise<{ lang: stri
         </header>
         <StackWeightDemo t={t.lab} />
         <GauntletReplay t={t.lab} />
-        <section className="lab-block" aria-labelledby="journal-label">
-          <div className="lab-head">
-            <h2 id="journal-label">{t.lab.journal.label}</h2>
-          </div>
-          <p className="lab-body">{t.lab.journal.body}</p>
-        </section>
+        <LabJournal t={t.lab} />
       </main>
       <Witness t={t} lang={l} />
     </>
