@@ -36,16 +36,19 @@ src/
     [lang]/               fa | en · the same mass, two voices (html dir switches)
       layout.tsx          root layout · fixed frame · skip-link · LangMemory
       page.tsx            the monument: Hero → VeinGraph → Chambers → Constitution
+      lab/page.tsx        /lab · the live notebook (sample scan, recorded gauntlet, journal)
       ask/page.tsx        /ask · the live terminal (confidence gate at 60)
       forge/page.tsx      /forge · کورهٔ تصمیم · the surprise organ
       design/page.tsx     the design system, embedded · as-built documentation
     api/
       status/route.ts     as-built telemetry · real endpoints or `absent` — never fake
       ask/route.ts        agent proxy · refuses to answer below the gate
+      journal/route.ts    public GitHub commits · 15-minute cache · stale beats broken
   components/             Hero · VeinGraph · ChamberGrid · Forge · AskTerminal · Gate
                           Witness · SocialLinks · SiteHeader · LangMemory · ResolveReveal
+  components/lab/         StackWeightDemo · GauntletReplay · GtCounter · LabJournal
   lib/                    systems registry · confidence + heat laws · social registry
-                          status hook · useLocalStorage (the only storage doorway)
+                          lab numbers (from real runs) · journal reader · status hook
   i18n/                   dictionaries · ink-density parity fa/en
 preview/index.html        static preview · see the monument without npm (same CSS)
 ```
@@ -106,6 +109,32 @@ Health endpoints may return anything with HTTP 200; if they return JSON
 Edit **`src/lib/social.ts`** — one registry, rendered by `SocialLinks` in the witness
 footer. Ships with GitHub / Instagram / Telegram / Email for `ehbarz`.
 
+## The live lab · /lab
+
+`/fa/lab` and `/en/lab` show three blocks. Each one states exactly what it is:
+
+| Block | Source of its numbers | Cost |
+|---|---|---|
+| StackWeight scan | `stackweight 0.1.0` run against `tests/fixtures/bloated` on 2026-11-06 — **sample data**, labelled | 1 rAF clock |
+| ChaosUsers gauntlet | run `20261106-074557-gauntlet-ea19ab`, the committed scripted cassette, seed 33 — **recorded run**, labelled | CSS `view()` timeline + one `IntersectionObserver` |
+| Recent builds | public GitHub API through `/api/journal`, 15-minute cache | one `fetch` |
+
+Numbers live in `src/lib/lab.ts`, copied from real tool output. Nothing is typed in by
+hand; if a demo run changes, that file changes. The journal's fallback seed is four real
+commits captured at build time, so the strip is whole before any JS runs.
+
+`/api/journal` is the whole Worker. It reads only public commit metadata, holds the
+answer for 15 minutes (`s-maxage=900`, `stale-while-revalidate` a week), and on a failed
+read returns the last good payload marked `source:"cache"`. It has no token and no
+access to private data.
+
+Both demos render their true values on the server; the animation starts from that state
+and returns to it, so a no-JS reader and a slow phone still see the real receipt.
+`node scripts/check-lab.mjs <baseUrl>` asserts it against a running build.
+
+Budget: `/lab` adds **4.8 kB** of its own JS. The 103 kB first-load floor is Next's
+framework and is paid by every route in the repo, including the homepage.
+
 ## Deploy — Cloudflare Workers
 
 Worker name: `ehbarz-site` (`wrangler.jsonc`). No environment variable is required
@@ -145,6 +174,11 @@ Check that URL:
 - `GET /en` shows the same page in English, including “Ehsan Barzamini — builder of software systems” and “At a glance”
 - The header theme control switches the page between the dark tokens and the paper theme, and the choice is still there after reload (`azarsang.theme` in localStorage). With no stored choice, the page follows `prefers-color-scheme`
 - `GET /fa/article` → 308 to `/fa`
+- `GET /fa/lab` shows the three lab blocks: the StackWeight scan with its sample-data
+  label and 1200×630 receipt, the recorded ChaosUsers gauntlet at grade F, and the
+  recent-builds journal
+- `GET /api/journal` → `{"commits":[…],"source":"live"}`, cached 15 minutes; returns
+  `source:"cache"` with the last good payload if GitHub fails, never an error page
 - `GET /api/status` → every system `"state":"absent"` until a `STATUS_URL_*` variable is set
 - `POST /api/ask` with a JSON body `{ "question": "…" }` → `"state":"absent"` until `ASK_ENDPOINT` is set
 
