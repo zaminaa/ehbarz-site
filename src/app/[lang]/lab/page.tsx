@@ -5,6 +5,7 @@ import { dict, LANGS, type Lang } from "@/i18n/dictionaries"
 import SiteHeader from "@/components/SiteHeader"
 import Witness from "@/components/Witness"
 import StackWeightDemo from "@/components/lab/StackWeightDemo"
+import GauntletReplay from "@/components/lab/GauntletReplay"
 
 export async function generateMetadata({ params }: { params: Promise<{ lang: string }> }) {
   const { lang } = await params
@@ -28,13 +29,7 @@ export default async function LabPage({ params }: { params: Promise<{ lang: stri
           <hr className="hero-rule" />
         </header>
         <StackWeightDemo t={t.lab} />
-        <section className="lab-block" aria-labelledby="gt-label">
-          <div className="lab-head">
-            <h2 id="gt-label">{t.lab.gt.label}</h2>
-            <span className="lab-badge">{t.lab.recorded}</span>
-          </div>
-          <p className="lab-body">{t.lab.gt.body}</p>
-        </section>
+        <GauntletReplay t={t.lab} />
         <section className="lab-block" aria-labelledby="journal-label">
           <div className="lab-head">
             <h2 id="journal-label">{t.lab.journal.label}</h2>
